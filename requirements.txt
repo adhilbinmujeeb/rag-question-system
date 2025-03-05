@@ -1,6 +1,10 @@
 streamlit
+google-generativeai
+numpy
+pandas
+matplotlib
+seaborn
 pymongo
 sentence-transformers
-requests
-numpy
-google-generativeai
+plotly
+streamlit-option-menu
