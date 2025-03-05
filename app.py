@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from sentence_transformers import SentenceTransformer
 
 # MongoDB Connection
-MONGO_URI = "mongodb+srv://your_user:your_password@your-cluster.mongodb.net/business_rag"
+MONGO_URI = "mongodb+srv://adhilbinmujeeb:admin123@cluster0.uz62z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(MONGO_URI)
 db = client["business_rag"]
 collection = db["questions"]
@@ -14,7 +14,7 @@ collection = db["questions"]
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Set Gemini API Key
-GEMINI_API_KEY = "your_gemini_api_key_here"
+GEMINI_API_KEY = "AIzaSyB5zaK5_IqRH1K5Rk9ibwSGP-nk1icWUIo"
 genai.configure(api_key=GEMINI_API_KEY)
 
 # Function to compute cosine similarity
@@ -46,7 +46,7 @@ def refine_questions_with_gemini(questions, user_query):
     Provide a structured and relevant set of questions.
     """
 
-    model = genai.GenerativeModel("gemini-pro")
+    model = genai.GenerativeModel("gemini-2.0-flash")
     response = model.generate_content(prompt)
 
     return response.text if response else "Error retrieving response from Gemini API"
