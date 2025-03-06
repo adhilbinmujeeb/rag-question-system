@@ -568,9 +568,7 @@ def start_questionnaire():
     st.session_state.qa_pairs = []
     st.session_state.report_generated = False
 
-# Function to handle next question
 def next_question():
-    # Save current answer
     current_q = st.session_state.questions[st.session_state.current_question_index]
     answer = st.session_state.current_answer
 
@@ -581,23 +579,23 @@ def next_question():
         "category": current_q.get("category", "General")
     })
 
-    # Move to next question or generate more if needed
+    # Move to the next question
     st.session_state.current_question_index += 1
 
-    # If we've reached the end of current questions, generate more
+    # If we have reached the end of available questions, generate new ones
     if st.session_state.current_question_index >= len(st.session_state.questions):
-        # After every 5 questions, generate new follow-up questions
         new_questions = generate_follow_up_question(
             st.session_state.business_type,
             st.session_state.qa_pairs,
             remaining_questions=3
         )
 
-        # Add IDs to the new questions to continue the sequence
-        for i, q in enumerate(new_questions):
-            q["id"] = len(st.session_state.questions) + i + 1
+        # Remove duplicates before adding new questions
+        existing_questions = {q["question"] for q in st.session_state.questions}
+        unique_new_questions = [q for q in new_questions if q["question"] not in existing_questions]
 
-        st.session_state.questions.extend(new_questions)
+        st.session_state.questions.extend(unique_new_questions)
+
 
 # Function to generate final report
 def generate_report():
